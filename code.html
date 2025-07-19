@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearningPoint - E-Learning Platform</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4e51df;
+            --secondary-color: #f8f9fc;
+            --accent-color: #2e59d9;
+        }
+        
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f8f9fc;
+        }
+        
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+            color: white;
+            padding: 5rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        .course-card {
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+            border-radius: 0.8rem;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .course-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .progress-bar-custom {
+            height: 0.5rem;
+            border-radius: 0.25rem;
+        }
+        
+        .lesson-video-container {
+            background-color: #000;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        
+        .sidebar {
+            position: sticky;
+            top: 1rem;
+        }
+        
+        .category-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .category-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .category-list li a {
+            text-decoration: none;
+            color: #333;
+        }
+        
+        .category-list li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        footer {
+            background-color: #2e59d9;
+            color: white;
+            margin-top: 3rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links li a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+        }
+        
+        .footer-links li a:hover {
+            color: white;
+        }
+        
+        .course-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1;
+        }
+        
+        .instructor-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">LearningPoint</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Courses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Categories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Instructors</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center">
+                    <div class="dropdown me-3">
+                        <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown">
+                            <img src="data:image/jpeg;base64,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" alt="User profile picture showing a professional headshot" class="user-avatar me-2">
+                            <span>Hi! Amaan Siddiqui</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">My Profile</a></li>
+                            <li><a class="dropdown-item" href="#">My Courses</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Sign Out</a></li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-outline-light">Upgrade</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-4">Learn Without Limits</h1>
+            <p class="lead mb-5">Get unlimited access to 5,000+ courses with personalized recommendations and expert instruction</p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control form-control-lg" placeholder="What do you want to learn today?">
+                        <button class="btn btn-light btn-lg" type="button">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 mb-4">
+                <div class="card sidebar">
+                    <div class="card-body">
+                        <h5 class="card-title">Categories</h5>
+                        <ul class="category-list">
+                            <li><a href="#"><i class="fas fa-laptop-code me-2"></i> Web Development</a></li>
+                            <li><a href="#"><i class="fas fa-mobile-alt me-2"></i> Mobile Development</a></li>
+                            <li><a href="#"><i class="fa-solid fa-brain"></i> Data Science</a></li>
+                            <li><a href="#"><i class="fas fa-chart-line me-2"></i> Data Anylatics</a></li>
+                            <li><a href="#"><i class="fa-solid fa-shield"></i> Cyber Security</a></li>
+                            <li><a href="#"><i class="fa-solid fa-file-code"></i> Java Developer</a></li>
+                        </ul>   
+                    </div>
+                </div>
+                
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Your Progress</h5>
+                        <div class="mb-3">
+                            <h6 class="text-muted">Complete Courses</h6>
+                            <div class="d-flex justify-content-between mb-1">
+                                <span>3/12</span>
+                                <span>25%</span>
+                            </div>
+                            <div class="progress progress-bar-custom">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 25%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="text-muted">Course Hours</h6>
+                            <div class="d-flex justify-content-between mb-1">
+                                <span>32/120</span>
+                                <span>27%</span>
+                            </div>
+                            <div class="progress progress-bar-custom">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: 27%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content Area -->
+            <div class="col-lg-9">
+                <div class="mb-4 d-flex justify-content-between align-items-center">
+                    <h2>Recommended Courses</h2>
+                    <a href="#" class="btn btn-outline-primary">View All</a>
+                </div>
+                
+                <!-- Course Grid -->
+                <div class="row">
+                    <!-- Course Card 1 -->
+                    <div class="col-md-4">
+                        <div class="card course-card">
+                            <span class="badge bg-warning text-dark course-badge">Bestseller</span>
+                            <img src="https://www.achieversit.com/management/uploads/course_image/web-dev-img1.jpeg" class="card-img-top course-img" alt="Web development course cover showing HTML and CSS code on a dark background">
+                            <div class="card-body">
+                                <h5 class="card-title">Web Development Bootcamp</h5>
+                                <p class="card-text text-muted">Master HTML, CSS, JavaScript and build real projects</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <span class="ms-1">4.8</span>
+                                        <span class="text-muted">(2,145 enrolled)</span>
+                                    </div>
+                                    <span class="badge bg-light text-dark">₹2000</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-transparent">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://t3.ftcdn.net/jpg/06/70/00/42/360_F_670004228_4EFH6zZn8kjVhc5q7FyXuAHn3PtSwpwy.jpg" class="instructor-img me-2" alt="Professional headshot of instructor Sarah">
+                                    <span class="small">Sarah</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Course Card 2 -->
+                    <div class="col-md-4">
+                        <div class="card course-card">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/51437c67-68ee-49b0-acb9-af239aa6c243.png" class="card-img-top course-img" alt="Data science course cover showing colorful charts and graphs">
+                            <div class="card-body">
+                                <h5 class="card-title">Data Science Fundamentals</h5>
+                                <p class="card-text text-muted">Learn Python, Pandas, NumPy and data visualization</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <span class="ms-1">4.7</span>
+                                        <span class="text-muted">(1,823 enrolled)</span>
+                                    </div>
+                                    <span class="badge bg-light text-dark">₹1500</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-transparent">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://media.istockphoto.com/id/1455343282/photo/portrait-of-an-indian-man.jpg?s=612x612&w=0&k=20&c=v0FUUguRBJLKtsSW2kFwVqqieKfTT7ULKHpe6n7MwvE=" class="instructor-img me-2" alt="Professional headshot of instructor Vivek Mittal">
+                                    <span class="small">Vivek Mittal</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Course Card 3 -->
+                    <div class="col-md-4">
+                        <div class="card course-card">
+                            <span class="badge bg-success text-white course-badge">New</span>
+                            <img src="data:image/jpeg;base64,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" class="card-img-top course-img" alt="Mobile app development course cover showing smartphone with colorful interface">
+                            <div class="card-body">
+                                <h5 class="card-title">Flutter Mobile Development</h5>
+                                <p class="card-text text-muted">Build cross-platform apps with Flutter and Dart</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <i class="fas fa-star text-warning"></i>
+                                        <span class="ms-1">4.9</span>
+                                        <span class="text-muted">(1,450 enrolled)</span>
+                                    </div>
+                                    <span class="badge bg-light text-dark">₹3000</span>
+                                </div>
+                            </div>
+                            <div class="card-footer bg-transparent">
+                                <div class="d-flex align-items-center">
+                                    <img src="https://media.istockphoto.com/id/1277971635/photo/portrait-of-a-smiling-man-of-indian-ethnicity.jpg?s=612x612&w=0&k=20&c=CnPwvagPlklsAjejUNkuKv_QXtaXPYFQ64AQYb-IAjA=" class="instructor-img me-2" alt="Professional headshot of instructor David Jackson">
+                                    <span class="small">David Jackson</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Continue Learning Section -->
+                <div class="mt-5 mb-4">
+                    <h2>Continue Learning</h2>
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-md-4">
+                                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5233afac-e478-4b51-9f88-10fefb2a5c0c.png" class="img-fluid rounded" alt="React.js course image showing logo and code samples">
+                                </div>
+                                <div class="col-md-8">
+                                    <h4>React.js: From Beginner to Advanced</h4>
+                                    <p class="text-muted">Learn React hooks, context API, and build 5 projects</p>
+                                    <div class="progress mb-3">
+                                        <div class="progress-bar" role="progressbar" style="width: 65%;" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">65% Complete</div>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <span class="text-muted">Lesson 7 of 12</span>
+                                        <a href="#" class="btn btn-primary">Continue</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video Player Section -->
+                <div class="mt-5 mb-4">
+                    <h2>Current Lesson</h2>
+                    <div class="card lesson-video-container shadow-lg">
+                        <div class="card-body p-0">
+                            <div class="ratio ratio-16x9">
+                               <iframe width="560" height="315" src="https://www.youtube.com/embed/SqcY0GlETPk?si=9CNg1rOiVDCBwyGB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                            </div>
+                            <div class="video-controls bg-dark py-2 px-3 d-flex justify-content-between align-items-center">
+                                <small class="text-white">HD Quality</small>
+                                <div class="form-check form-switch mb-0">
+                                    <input class="form-check-input" type="checkbox" id="qualityToggle" checked>
+                                    <label class="form-check-label text-white small" for="qualityToggle">HD</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <h5>React Hooks: useState and useEffect</h5>
+                            <div class="d-flex justify-content-between">
+                                <span class="text-muted">Duration: 32:15</span>
+                                <div>
+                                    <button class="btn btn-sm btn-outline-secondary me-2"><i class="fas fa-bookmark"></i> Bookmark</button>
+                                    <button class="btn btn-sm btn-outline-primary"><i class="fas fa-check"></i> Complete Lesson</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Course Content Accordion -->
+                <div class="mt-4">
+                    <h4>Course Content</h4>
+                    <div class="accordion" id="courseAccordion">
+                        <!-- Section 1 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sectionOne">
+                                    <div class="d-flex justify-content-between w-100 pe-3">
+                                        <span>Section 1: Getting Started with React</span>
+                                        <span class="text-muted">4 lessons • 2h 15m</span>
+                                    </div>
+                                </button>
+                            </h2>
+                            <div id="sectionOne" class="accordion-collapse collapse" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body p-0">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-check-circle text-success me-3"></i>
+                                                <span>Introduction to React</span>
+                                            </div>
+                                            <span class="badge bg-light text-muted">24:15</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-check-circle text-success me-3"></i>
+                                                <span>Setting Up Your Environment</span>
+                                            </div>
+                                            <span class="badge bg-light text-muted">18:30</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-check-circle text-success me-3"></i>
+                                                <span>Your First React Component</span>
+                                            </div>
+                                            <span class="badge bg-light text-muted">32:10</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-play-circle text-primary me-3"></i>
+                                                <span>React JSX Basics</span>
+                                            </div>
+                                            <span class="badge bg-light text-muted">40:20</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Section 2 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#sectionTwo">
+                                    <div class="d-flex justify-content-between w-100 pe-3">
+                                        <span>Section 2: React Fundamentals</span>
+                                        <span class="text-muted">5 lessons • 3h 45m</span>
+                                    </div>
+                                </button>
+                            </h2>
+                            <div id="sectionTwo" class="accordion-collapse collapse show" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body p-0">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-check-circle text-success me-3"></i>
+                                                <span>State and Props in React</span>
+                                            </div>
+                                            <span class="badge bg-light text-muted">38:15</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-check-circle text-success me-3"></i>
+                                                <span>Component Lifecycle Methods</span>
+                                            </div>
+                                            <span class="badge bg-light text-muted">45:20</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-play-circle text-primary me-3"></i>
+                                                <span>React Hooks: useState and useEffect</span>
+                                            </div>
+                                            <span class="badge bg-light text-muted">32:15</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-lock text-muted me-3"></i>
+                                                <span>Building Custom Hooks</span>
+                                            </div>
+                                            <span class="badge bg-light text-muted">1h 05:00</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-lock text-muted me-3"></i>
+                                                <span>Context API Deep Dive</span>
+                                            </div>
+                                            <span class="badge bg-light text-muted">45:30</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Section 3 -->
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sectionThree">
+                                    <div class="d-flex justify-content-between w-100 pe-3">
+                                        <span>Section 3: Advanced Topics</span>
+                                        <span class="text-muted">3 lessons • 2h 30m</span>
+                                    </div>
+                                </button>
+                            </h2>
+                            <div id="sectionThree" class="accordion-collapse collapse" data-bs-parent="#courseAccordion">
+                                <div class="accordion-body p-0">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-lock text-muted me-3"></i>
+                                                <span>Performance Optimization</span>
+                                            </div>
+                                            <span class="badge bg-light text-muted">50:45</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-lock text-muted me-3"></i>
+                                                <span>Testing React Applications</span>
+                                            </div>
+                                            <span class="badge bg-light text-muted">45:30</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-lock text-muted me-3"></i>
+                                                <span>Deploying React Apps</span>
+                                            </div>
+                                            <span class="badge bg-light text-muted">54:15</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 mb-4">
+                    <h5>LearningPoint</h5>
+                    <p class="small text-muted">Empowering learners worldwide with high-quality education.</p>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h5>Company</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h5>Support</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 mb-4">
+                    <h5>Connect</h5>
+                    <div class="social-links mb-3">
+                        <a href="#" class="text-white me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white me-2"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <p class="small text-muted">Subscribe to our newsletter</p>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Your email">
+                        <button class="btn btn-light" type="button">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p class="small text-muted mb-0">© 2023 LearningPoint. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample JavaScript for interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Track course progress
+            const progressBars = document.querySelectorAll('.progress-bar');
+            progressBars.forEach(bar => {
+                const percentage = bar.style.width;
+                bar.setAttribute('aria-valuenow', percentage.replace('%', ''));
+                bar.textContent = percentage;
+            });
+            
+            // Handle lesson completion
+            const completeLessonBtn = document.querySelector('.btn-outline-primary');
+            if(completeLessonBtn) {
+                completeLessonBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const icon = e.currentTarget.querySelector('i');
+                    icon.classList.remove('fa-play-circle');
+                    icon.classList.add('fa-check-circle');
+                    icon.classList.remove('text-primary');
+                    icon.classList.add('text-success');
+                    
+                    // Update course progress
+                    const overallProgress = document.querySelector('.progress-bar');
+                    const currentValue = parseInt(overallProgress.getAttribute('aria-valuenow'));
+                    const newValue = Math.min(currentValue + 8, 100);
+                    overallProgress.style.width = newValue + '%';
+                    overallProgress.setAttribute('aria-valuenow', newValue);
+                    overallProgress.textContent = newValue + '% Complete';
+                    
+                    // Update lesson status
+                    e.currentTarget.disabled = true;
+                    e.currentTarget.classList.remove('btn-outline-primary');
+                    e.currentTarget.classList.add('btn-outline-secondary');
+                    e.currentTarget.textContent = 'Completed';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
