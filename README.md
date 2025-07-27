@@ -1,5 +1,18 @@
 # E-learning-Platform-UI
-# Learning point E-Learning Frontend (HTML + Bootstrap)
+
+*COMPANY: CODTECH IT SOLUTIONS
+
+"NAME: Mohammad Amaan siddiqui
+
+"INTERN ID": CT12DH603
+
+"DOMAIN: FRONT END WEB DEVELOPMENT
+
+"DURATION: 3 months
+
+"MENTOR': NEELA SANTOSH
+
+# Learning point Frontend (HTML + Bootstrap)
 
 This project is a **responsive single-page front-end** for an e-learning platform, developed using **HTML5**, **Bootstrap 5**, and a bit of JavaScript. It features course listings, video modals, a simple login form, and a basic dashboard UI.
 
@@ -71,4 +84,13 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 ## 🙋 Author
 
 **Amaan Siddiqui**  
-[Your GitHub Profile](https://github.com/) *(Replace with your actual profile)*
+
+OUTPUT:
+
+
+
+
+
+
+
+
