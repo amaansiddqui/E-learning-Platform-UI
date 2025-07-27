@@ -87,7 +87,15 @@ This project is licensed under the [MIT License](https://opensource.org/licenses
 
 OUTPUT:
 
+<img width="960" height="434" alt="Image" src="https://github.com/user-attachments/assets/ae490cc9-67e2-4ace-9c5d-25b10e5ad8e4" />
 
+<img width="1920" height="856" alt="Image" src="https://github.com/user-attachments/assets/ba525f6d-246b-413f-8ddb-e882e458be40" />
+
+<img width="960" height="434" alt="Image" src="https://github.com/user-attachments/assets/852c8dc2-b74f-4016-a3a5-3fbfb35f801a" />
+
+<img width="960" height="435" alt="Image" src="https://github.com/user-attachments/assets/1eb004b7-6a38-40e5-8e0a-40525cde84ab" />
+
+<img width="960" height="436" alt="Image" src="https://github.com/user-attachments/assets/c2f8be30-171e-47e8-94c7-706ef597e5c9" />
 
 
 
